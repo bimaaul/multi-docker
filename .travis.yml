@@ -13,3 +13,10 @@ after_success:
   - docker build -t bimaaul/fibonacci-nginx ./nginx
   - docker build -t bimaaul/fibonacci-server ./server
   - docker build -t bimaaul/fibonacci-worker ./worker
+  # login to docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push image to docker hub
+  - docker push bimaaul/fibonacci-client
+  - docker push bimaaul/fibonacci-nginx
+  - docker push bimaaul/fibonacci-server
+  - docker push bimaaul/fibonacci-worker
