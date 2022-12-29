@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t bimaaul/fibonacci-test -f ./fibonacci-generator/Dockerfile.dev ./fibonacci-generator
+
+script:
+  - docker run bimaaul/fibonacci-test yarn test -- --coverage
+
+after_success:
+  - docker build -t bimaaul/fibonacci-client ./fibonacci-generator
+  - docker build -t bimaaul/fibonacci-nginx ./nginx
+  - docker build -t bimaaul/fibonacci-server ./server
+  - docker build -t bimaaul/fibonacci-worker ./worker
